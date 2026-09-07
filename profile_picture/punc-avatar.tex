@@ -1,0 +1,91 @@
+% ---------------------------------------------------------------------------
+%  PUnC avatar -- | ( sum . ; . prod ) >
+%  A diagonal 2x2 matrix of circuit units inside LaTeX-style parentheses,
+%  inside a ket.                       Compile:  pdflatex punc-avatar.tex
+% ---------------------------------------------------------------------------
+\documentclass[tikz,border=0pt]{standalone}
+
+% ---- Variant switches -----------------------------------------------------
+\newif\ifdark  \darktrue   % true: dark canvas | false: light canvas
+
+% ---- Palette (Okabe-Ito) --------------------------------------------------
+\definecolor{oiOrange}{HTML}{E69F00}
+\definecolor{oiSkyBlue}{HTML}{56B4E9}
+\ifdark
+  \definecolor{fg}{HTML}{E6EDF3}\definecolor{bg}{HTML}{0D1117}
+\else
+  \definecolor{fg}{HTML}{1B1F24}\definecolor{bg}{HTML}{FFFFFF}
+\fi
+
+% ---- Geometry knobs -------------------------------------------------------
+\def\side{4.62}       % half canvas (content stays inside the inscribed circle)
+\def\qc{1.0837}      % entries centred in their quadrant (= parh/2)
+% circuit units (unchanged)
+\def\gR{0.7412}         % unit-circle radius (stroke centreline)
+\def\ringw{0.1463}      % ring stroke width
+\def\gClip{0.7705}      % cross clipped past the ring's inner edge (0.685) so
+                      % fill and stroke overlap -> no hairline seam
+\def\armw{0.1132}      % half-width of the cross arms
+\def\armlen{1.0729}     % arms drawn well past the clip radius
+% parentheses: straight stem, hooks only at the ends, tapering to the tips
+\def\parx{2.2695}        % x of the stem's outer edge
+\def\parh{2.1675}         % half-height
+\def\pars{0.8128}         % half-length of the straight part
+\def\pard{0.5635}         % horizontal reach of the hooks
+\def\parw{0.102}        % stem thickness  (was 0.203 -> 50% thinner)
+\def\parco{0.45}        % outer-curve control (lower = boxier hook)
+\def\parci{0.62}        % inner-curve control
+% ket
+\def\ketw{0.128}      % stroke width    (was 0.17  -> 25% thinner)
+\def\keth{2.55}       % half-height
+\def\ketbar{3.22}     % x of the vertical bar
+\def\ketbase{2.82}    % x where the angle bracket starts
+\def\ketapex{3.42}    % x of its tip
+\def\shiftx{-0.10}    % re-centre the (asymmetric) ket
+
+% a circuit unit: #1 centre, #2 colour, #3 rotation (0 = sum, 45 = product).
+\newcommand{\opunit}[3]{%
+  \begin{scope}[shift={#1}]
+    \begin{scope}
+      \clip (0,0) circle (\gClip);
+      \fill[#2,rotate=#3] (-\armw,-\armlen) rectangle (\armw,\armlen)
+                          (-\armlen,-\armw) rectangle (\armlen,\armw);
+    \end{scope}
+    \draw[#2,line width=\ringw cm] (0,0) circle (\gR);
+  \end{scope}}
+
+% a parenthesis, stem outer edge on the y-axis, opening to the right.
+% #1 = 1 for "(",  -1 for ")".  Outer and inner boundaries meet at the tips,
+% so the stroke tapers to a point instead of ending bluntly.
+\newcommand{\paren}[1]{%
+  \fill[fg,xscale=#1]
+      ({\pard},{\parh})
+      .. controls ({\parco*\pard},{\parh-0.05*(\parh-\pars)})
+              and (0,{\pars+\parci*(\parh-\pars)})            .. (0,{\pars})
+      -- (0,{-\pars})
+      .. controls (0,{-\pars-\parci*(\parh-\pars)})
+              and ({\parco*\pard},{-\parh+0.05*(\parh-\pars)})  .. ({\pard},{-\parh})
+      .. controls ({\parco*\pard+0.10},{-\parh+0.14*(\parh-\pars)})
+              and ({\parw},{-\pars-\parci*(\parh-\pars)-0.08})  .. ({\parw},{-\pars})
+      -- ({\parw},{\pars})
+      .. controls ({\parw},{\pars+\parci*(\parh-\pars)+0.08})
+              and ({\parco*\pard+0.10},{\parh-0.14*(\parh-\pars)}) .. ({\pard},{\parh})
+      -- cycle;}
+
+\begin{document}
+\begin{tikzpicture}[line cap=butt,line join=miter]
+  \fill[bg] (-\side,-\side) rectangle (\side,\side);
+  \begin{scope}[shift={(\shiftx,0)}]
+    % --- matrix entries: sum upper-left, product lower-right ---------------
+    \opunit{(-\qc,\qc)}{oiOrange}{0}
+    \opunit{(\qc,-\qc)}{oiSkyBlue}{45}
+    % --- parentheses --------------------------------------------------------
+    \begin{scope}[shift={(-\parx,0)}] \paren{1}  \end{scope}
+    \begin{scope}[shift={( \parx,0)}] \paren{-1} \end{scope}
+    % --- ket ----------------------------------------------------------------
+    \draw[fg,line width=\ketw cm] (-\ketbar,-\keth) -- (-\ketbar,\keth);
+    \draw[fg,line width=\ketw cm]
+      (\ketbase,\keth) -- (\ketapex,0) -- (\ketbase,-\keth);
+  \end{scope}
+\end{tikzpicture}
+\end{document}
