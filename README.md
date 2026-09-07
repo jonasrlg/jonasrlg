@@ -10,11 +10,11 @@ PhD student in Computer Science · Probabilistic Machine Learning · Neuro-Symbo
 
 ## About
 
-I am a doctoral student in Computer Science at [Örebro University]
-(https://www.oru.se/english/employee/jonas_goncalves), Sweden, in the School of
-Science and Technology. My research lies at the intersection of probabilistic
-machine learning, neuro-symbolic AI, probabilistic circuits, and knowledge
-representation.
+I am a doctoral student in Computer Science at
+[Örebro University](https://www.oru.se/english/employee/jonas_goncalves),
+Sweden, in the School of Science and Technology. My research lies at the
+intersection of probabilistic machine learning, neuro-symbolic AI,
+probabilistic circuits, and knowledge representation.
 
 I study how to make machine-learning and probabilistic models expressive while
 preserving enough mathematical structure for useful reasoning and inference to
@@ -72,9 +72,8 @@ and [ORCID record](https://orcid.org/0000-0002-4533-3461) (`0000-0002-4533-3461`
 A representative publication is [*dPASP: A Probabilistic Logic Programming
 Environment For Neurosymbolic Learning and Reasoning*](https://doi.org/10.24963/kr.2024/69),
 co-authored with Renato Lui Geh, Igor C. Silveira, Denis D. Mauá, and Fábio G.
-Cozman. It appeared in the KR in the Wild track of the [21st International
-Conference on Principles of Knowledge Representation and Reasoning (KR 2024)]
-(https://proceedings.kr.org/2024/69/), pp. 731–742.
+Cozman. It appeared in the KR in the Wild track of
+[KR 2024](https://proceedings.kr.org/2024/69/), pp. 731–742.
 
 ## Background
 
